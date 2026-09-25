@@ -1,0 +1,30 @@
+{
+  "name": "eneco-battered-batteries-function",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Azure Function that forwards Eneco battery setpoints to the Battered Batteries API.",
+  "main": "dist/functions/*.js",
+  "packageManager": "npm@12.1.0",
+  "engines": {
+    "node": "24.21.0",
+    "npm": "12.1.0"
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "prestart": "npm run build",
+    "start": "func start",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@azure/functions": "4.16.5",
+    "@azure/functions-extensions-servicebus": "0.5.1",
+    "axios": "1.20.0"
+  },
+  "devDependencies": {
+    "@types/node": "24.13.6",
+    "typescript": "7.0.2",
+    "vitest": "5.0.1"
+  }
+}

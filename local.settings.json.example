@@ -1,0 +1,12 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "node",
+    "CONNECTION-STRING-SBQ-BATBAT-SPT": "<service-bus-connection-string>",
+    "BATTERED_BATTERIES_API_KEY": "<api-key>",
+    "BATTERED_BATTERIES_BASE_URL": "https://BatB.azure-api.net",
+    "BATTERED_BATTERIES_TIMEOUT_MS": "5000",
+    "BATTERED_BATTERIES_MAX_RETRIES": "1"
+  }
+}

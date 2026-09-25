@@ -1,0 +1,111 @@
+openapi: 3.0.3
+info:
+  title: Battered Batteries API specification
+  description: >
+    This API contains a single endpoint used to send setpoints to our home Batteries
+  version: "1.0.0"
+servers:
+  - url: https://BatB.azure-api.net
+paths:
+  /{device}/setpoint:
+    post:
+      summary: Send a setpoint
+      description: >
+        Sends a setpoint
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - name: device
+          in: path
+          description: "Device identifier"
+          required: true
+          example: "BB00001"
+          schema:
+            type: string
+      requestBody:
+        description: setpoint data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/postSetpoint'
+      responses:
+        "204":
+          description: Setpoint Processed
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response'
+        "400":
+          description: Bad request
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response'
+        "401":
+          description: Unauthorized
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response'
+        "404":
+          description: Device unknown
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response'
+        "429":
+          description: Request throttled
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response'
+        "500":
+          description: Internal error
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response'
+
+components:
+  schemas:
+    postSetpoint:
+      type: object
+      properties:
+        data:
+          required:
+          - startTime
+          - endTime
+          - value
+          type: object
+          properties:
+            startTime:
+              type: integer
+              description: Epoch timestamp in seconds, Should be in the future
+              example: 1735725600
+            endTime:
+              type: integer
+              description: Epoch timestamp in seconds, Should be later than startTime
+              example: 1735726500
+            value:
+              type: integer
+              description: setpoint value in watt, negative means discharging, positive means charging
+              example: 3000
+    response:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 204
+        message:
+          type: string 
+          example: 'Processed'
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      description: api key
+      name: Ocp-Apim-Subscription-Key
+      in: header
